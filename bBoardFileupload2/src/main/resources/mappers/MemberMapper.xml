@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.dao.MemberDAO"> <!--DAO랑 이름 맞추기 위해서-->
+
+	<!--전체레코드 검색-->
+	<select id="getMemberList" resultType="MemberVO">
+		SELECT
+			*
+		FROM Member
+	</select>
+	
+	<!--상세레코드 검색-->
+	<select id="getMember" parameterType="MemberVO" resultType="hashmap">
+		SELECT	m.id id
+				, m.name name
+				, m.password password
+				, mf.fileid fileid
+				, mf.filename filename
+				, mf.originFilename originFilename
+				, mf.filepath filepath
+		FROM member m left outer join member_file mf
+		ON m.id = mf.member_id
+		WHERE m.id = mf.member_id
+	</select>
+	
+	<!--레코드 입력-->
+	<insert id="saveMember" parameterType="MemberVO">
+		INSERT INTO Member(id, name, password)
+		VALUES(#{id}, #{name}, #{password})
+	</insert>	
+
+	<insert id="saveMemberFile" parameterType="MemberFileVO">
+	  INSERT INTO member_file (member_id, originFilename, filename, filepath)
+	  VALUES (#{member_id}, #{originFilename}, #{filename}, #{filepath})
+	</insert>
+	
+	<!--레코드 수정-->
+	<update id="updateMember" parameterType="MemberVO">
+		UPDATE Member
+		SET name=#{name}, password=#{password}
+		WHERE id=#{id}
+	</update>
+	
+	<!--레코드 삭제-->
+	<delete id="deleteMember" parameterType="MemberVO">
+		DELETE FROM Member
+		WHERE id=#{id}
+	</delete>
+
+
+
+</mapper>
+

@@ -1,0 +1,31 @@
+package com.example.dao;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import com.example.domain.MemberFileVO;
+
+@Mapper
+public interface MemberFileDAO { //매퍼랑 짝꿍 만들기 위해서 요 DAO가 필요
+
+	@Insert(  "		INSERT INTO member_file "
+			+ "		(	member_id  			"
+			+ "			, originFilename  	"
+			+ "			, filename 			"
+			+ "			, filepath 			"
+			+ "		)						"
+			+ "		VALUES (				"
+			+ "			#{member_id}		"
+			+ "			, #{originFilename}	"
+			+ "			, #{filename}		"
+			+ "			, #{filepath}		"
+			+ "		)						"
+			)
+	public Integer insertFile(MemberFileVO fvo); //받을거면 int, 받을 생각 없으면 void, 안줘도 public인 이유는 interface여서.
+	
+	@Select("SELECT * FROM member_file WHERE fileid = #{fileid}")
+	public MemberFileVO selectFile(MemberFileVO fvo); // 무조건 하나 받는다. pk 검색이라서, 여러 개 받을 거면 List<FileVO>로 적으면 된다.
+	
+	
+}

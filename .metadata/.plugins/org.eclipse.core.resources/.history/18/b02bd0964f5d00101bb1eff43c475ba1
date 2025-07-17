@@ -1,0 +1,23 @@
+package com.example.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.persistence.QueryMethodRepository;
+
+@Controller
+public class QueryMethodController {
+
+	@Autowired
+	private QueryMethodRepository repo;
+	
+	@RequestMapping("/querymethod")
+	public String sample() {
+		
+		repo.findByTitle("1212");
+		
+		return "/board/getBoardList";
+	}
+	
+}

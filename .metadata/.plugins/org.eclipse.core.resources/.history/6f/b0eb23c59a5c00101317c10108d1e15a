@@ -1,0 +1,56 @@
+package com.example.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.domain.Employee;
+import com.example.service.EmpService;
+
+@Controller
+@RequestMapping("employee")
+public class EmpController {
+
+	Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
+	@Autowired
+	private EmpService service;
+	
+	@RequestMapping("/getEmployeeList")
+	public void getEmployeeList(Model m) {
+		logger.info("[EmpController - getEmployeeList] 요청");
+
+		List<Employee> listEmp = service.getEmployeeList();
+		
+		m.addAttribute("EmpList", listEmp);
+	}
+	
+	@RequestMapping("/{step}")
+	public String insertEmp(@PathVariable String step) {
+		logger.info("[EmpController] 요청" + step);
+		return "employee/" + step;
+	}
+	
+	@RequestMapping("/saveEmp")
+	public String saveEmp(Employee vo) {
+		logger.info("[EmpController - saveEmp] 요청");
+		
+		service.saveEmployee(vo);
+		
+		return "redirect:getEmployeeList";
+	}
+	
+	@RequestMapping("/getEmployee")
+	public void getEmployee(Employee vo, Model m) {
+		logger.info("[EmpController - getEmployee] 요청");
+		Employee result = service.getEmployee(vo);
+		m.addAttribute("Emp", result);
+	}
+	
+}

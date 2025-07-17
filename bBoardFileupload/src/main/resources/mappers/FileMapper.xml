@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.example.dao.FileDAO">
+
+	<!--board_file 테이블에 입력-->
+	<insert id="insertFile" parameterType="FileVO">
+		INSERT INTO board_file
+		(
+			board_seq
+			, originFilename
+			, filename
+			, filepath
+		)
+		VALUES (
+			#{board_seq}
+			, #{originFilename}
+			, #{filename}
+			, #{filepath}
+		)
+	</insert>
+	
+	<!--board_file 테이블에서 PK로 검색-->
+	<select id="selectFile" parameterType="FileVO" resultType="FileVO">
+		SELECT *
+		FROM board_file
+		WHERE fileid = #{fileid}
+	</select>
+
+</mapper>

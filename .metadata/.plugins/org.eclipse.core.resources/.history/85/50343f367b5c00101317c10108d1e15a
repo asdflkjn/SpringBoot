@@ -1,0 +1,22 @@
+package com.example.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.domain.BoardVO;
+import com.example.persistence.BoardRepository;
+
+public class BoardServiceImpl implements BoardService{
+	
+	@Autowired // repo가 알아서 할 것 같애. 객체만 주입해줘
+	BoardRepository boardRepo;
+	
+	public List<BoardVO> getBoardList(BoardVO vo){
+		
+		List<BoardVO> list = (List<BoardVO>) boardRepo.findAll(); // 다른 애가 넘어왔으니 형변환 시켜주기
+		
+		return null;
+	};
+
+}

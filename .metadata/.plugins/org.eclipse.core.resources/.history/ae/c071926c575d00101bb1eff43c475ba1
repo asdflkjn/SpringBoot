@@ -1,0 +1,61 @@
+package com.example.persistence;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.example.domain.BoardVO;
+
+public interface QueryMethodRepository extends CrudRepository<BoardVO, Integer>{
+
+	// 검색 -> SELECT
+	
+	// (1) 제목에 맞는 값을 검색
+//			SELECT * FROM 테이블명 WHERE title = ?
+	List<BoardVO> findByTitle(String title);
+	
+//	WHERE title <> ?1
+//	WHERE title != ?1
+	List<BoardVO> findByTitleNot(String title);
+	
+	// (2) WHERE title <> ?1 OR writer =?2
+//			WHERE title != 'test1' or writer = 'test3'
+	List<BoardVO> findByTitleNotOrWriter(String title, String writer);
+	
+	// (3-1) cnt가 2인 경우
+	List<BoardVO> findByCnt(Integer cnt);
+	
+	// (3-2) cnt가 5보다 큰 경우
+	List<BoardVO> findByCntGreaterThan(Integer cnt);
+	
+	// (3-3) cnt가 5 이상인 경우
+	List<BoardVO> findByCntGreaterThanEqual(Integer cnt);
+	
+	// (3-4) cnt가 3 이하인 경우
+	List<BoardVO> findByCntLessThanEqual(Integer cnt);
+	
+	// (4-1) regdate가 null인 경우
+	List<BoardVO> findByRegdateIsNull();
+	
+	// (4-2) regdate가 null이 아닌 경우
+	List<BoardVO> findByRegdateIsNotNull ();
+	
+	// (4-3) regdate가 '25/07/10'이전에 입력한 경우
+	List<BoardVO> findByRegdateBefore (Date regdate);
+	
+	// (5) 검색어처리
+//	WHERE writer LIKE '%홍%'
+//	WHERE writer LIKE '%' || ?1 ||'%' 		(오라클)
+//	WHERE writer LIKE concat('%',?1,'%') 	(mysql)
+	
+	// 함수 이름만 잘 만들어 놓으면 알아서 where절을 지정할거야.
+}
+
+
+/* 기본 메소드 정리 -> CRUD
+	-findAll() : 전체검색할래
+	-findById(): PK 검색할래
+	-save()
+	-deleteById()
+*/

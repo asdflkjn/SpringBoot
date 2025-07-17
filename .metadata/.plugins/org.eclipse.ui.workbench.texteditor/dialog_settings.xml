@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="true"/>
+		<list key="replacehistory">
+			<item value="Member"/>
+			<item value="member"/>
+		</list>
+		<list key="findhistory">
+			<item value="Board"/>
+			<item value="memberService.saveMember(vo)"/>
+			<item value="board"/>
+			<item value="확장자"/>
+			<item value="MemberVO dbMember"/>
+			<item value="saveMember"/>
+			<item value="List"/>
+			<item value="getMember"/>
+			<item value="동적"/>
+			<item value="\r\n"/>
+			<item value="session"/>
+		</list>
+	</section>
+</section>

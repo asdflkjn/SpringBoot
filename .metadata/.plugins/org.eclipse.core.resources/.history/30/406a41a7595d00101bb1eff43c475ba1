@@ -1,0 +1,28 @@
+package com.example.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.persistence.PagingRepository;
+
+@Controller
+public class PagingController {
+
+	@Autowired
+	private PagingRepository repo;
+	
+	@RequestMapping("pagemethod")
+	public String page(Model m) {
+	
+		// 페이징
+		Pageable paging = PageRequest.of(1,2); // 0번 페이지에서 2개 레코드 갖고 올거야.
+		
+		m.addAttribute("boardList", repo.findAll(paging));
+		
+		return "/board/getBoardList";
+	}
+} 

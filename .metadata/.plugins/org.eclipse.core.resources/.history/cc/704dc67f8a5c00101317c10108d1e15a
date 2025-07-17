@@ -1,0 +1,66 @@
+package com.example.controller;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.domain.BoardVO;
+import com.example.service.BoardService;
+
+@Controller
+@RequestMapping("board")
+public class BoardController {
+
+	Logger logger = LoggerFactory.getLogger(BoardController.class);
+	
+	@Autowired
+	private BoardService service;
+	
+	@RequestMapping("/getBoardList")
+	public void getBoardList(Model m) {
+		logger.info("[BoardController - getBoardList] 요청");
+		
+		List<BoardVO> listBoard= service.getBoardList();
+		
+		m.addAttribute("boardList", listBoard);
+	}
+	
+	@RequestMapping("/{step}")
+	public String insertBoard(@PathVariable String step) {	
+		logger.info("[BoardController ] 요청 " + step);
+		return "board/" + step;
+	}
+	
+	@RequestMapping("/saveBoard") // saveBoard 요청이 불려졌을 때 요청을 받아서
+	public String saveBoard(BoardVO vo){
+		logger.info("[BoardController - saveBoard] 요청");	
+		
+		service.saveBoard(vo); // saveBoard 함수를 하나 부를거야
+		
+		return "redirect:getBoardList";
+	}
+	
+	@RequestMapping("/getBoard")
+	public void getBoard(BoardVO vo, Model m) {
+		logger.info("[BoardController - getBoard] 요청");
+		BoardVO result = service.getBoard(vo);
+		m.addAttribute("board", result);
+	}
+	
+	@RequestMapping("/deleteBoard")
+	public String deleteBoard(BoardVO vo) {
+		logger.info("[BoardController - deleteBoard] 요청");
+		service.deleteBoard(vo);
+		
+		return "redirect:getBoardList";
+	}
+	
+	
+	
+}

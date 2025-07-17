@@ -1,0 +1,58 @@
+package com.example.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.domain.BoardVO;
+import com.example.persistence.BoardRepository;
+
+@Service
+public class BoardServiceImpl implements BoardService{
+	
+	@Autowired // repo가 알아서 할 것 같애. 객체만 주입해줘
+	BoardRepository boardRepo;
+	
+	public List<BoardVO> getBoardList(){
+		
+		List<BoardVO> list = (List<BoardVO>) boardRepo.findAll(); // 다른 애가 넘어왔으니 형변환 시켜주기
+		// 결과출력 - 콘솔에 찍어봐야 안다.
+
+		return list; // null말고
+	};
+
+	
+	public void saveBoard(BoardVO vo) {
+		boardRepo.save(vo);
+	}
+	
+	public BoardVO getBoard(BoardVO vo) {
+		BoardVO result = boardRepo.findById(vo.getSeq()).get();
+		//결과출력
+
+		result.setCnt(result.getCnt() + 1);
+		boardRepo.save(result);
+
+		return result;
+	}
+	
+	public void deleteBoard(BoardVO vo) {
+		boardRepo.deleteById(vo.getSeq());
+		//결과출력
+		
+	}
+	
+	public void updateBoard(BoardVO vo) {
+		boardRepo.save(vo);
+	}
+	
+	/* 메소드 정리
+		-findAll()
+		-findById()
+		-save()
+		-deleteById()
+	*/
+	
+
+}

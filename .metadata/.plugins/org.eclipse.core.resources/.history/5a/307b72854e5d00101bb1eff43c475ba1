@@ -1,0 +1,17 @@
+package com.example.persistence;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.example.domain.BoardVO;
+
+public interface QueryMethodRepository extends CrudRepository<BoardVO, Integer>{
+
+}
+
+
+/* 기본 메소드 정리 -> CRUD
+	-findAll() 
+	-findById()
+	-save()
+	-deleteById()
+*/

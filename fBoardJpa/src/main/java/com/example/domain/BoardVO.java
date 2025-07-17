@@ -1,0 +1,38 @@
+package com.example.domain;
+
+import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+
+// VO != DTO != Entity 3개가 다르다.
+
+@Data
+@Entity
+// @Table(name="board") // board라는 테이블하고 매핑하고 싶어
+public class BoardVO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // mybatis에서 auto increment로 잡혀야 해서. PK 기술
+	private Integer seq;
+	
+	// String은 자동으로 255개로 잡았음.
+	private String title;
+	@Column(updatable = false) // 수정할 때 작성자는 안바꾸도록
+	private String writer;
+	@Column(length = 500) // mybatis는 글자수, oracle은 바이트수.
+	private String content;
+//	@CreationTimestamp //등록할 때만 시간 등록되고 수정하면 시간이 사라짐
+	@UpdateTimestamp // 수정시간이 반영됨
+	private Date regdate;
+//	@ColumnDefault("0")
+	@Column(columnDefinition = "integer default 0", insertable = false, updatable = false)
+	private Integer cnt;
+	
+}

@@ -1,0 +1,28 @@
+package com.example.persistence;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.example.domain.BoardVO;
+
+public interface QueryMethodRepository extends CrudRepository<BoardVO, Integer>{
+
+	// 검색 -> SELECT
+	
+	// (1) 제목에 맞는 값을 검색
+//			SELECT * FROM 테이블명 WHERE title = ?
+	List<BoardVO> findByTitle(String title);
+	
+//	WHERE title <> ?1
+//	WHERE title != ?1
+	List<BoardVO> findByTitleNot(String title);
+}
+
+
+/* 기본 메소드 정리 -> CRUD
+	-findAll() : 전체검색할래
+	-findById(): PK 검색할래
+	-save()
+	-deleteById()
+*/

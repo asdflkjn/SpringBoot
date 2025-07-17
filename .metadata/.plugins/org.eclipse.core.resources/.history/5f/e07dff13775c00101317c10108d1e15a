@@ -1,0 +1,19 @@
+package com.example.domain;
+
+import jakarta.persistence.Entity;
+import lombok.Data;
+
+// VO != DTO != Entity 3개가 다르다.
+
+@Data
+@Entity
+// @Table(name="board") // board라는 테이블하고 매핑하고 싶어
+public class BoardVO {
+	
+	private Integer seq;
+	private String title;
+	private String writer;
+	private String content;
+	private String regdate;
+	private Integer cnt;
+}

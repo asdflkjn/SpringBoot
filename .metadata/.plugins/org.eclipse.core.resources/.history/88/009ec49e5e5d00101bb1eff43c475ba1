@@ -1,0 +1,25 @@
+package com.example.persistence;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.example.domain.BoardVO;
+
+public interface QueryAnnoRepository extends CrudRepository<BoardVO, Integer> {
+	
+	//------------------------
+//	복잡한 쿼리
+//	[1] JPQL
+	@Query("SELECT b "
+		+ "FROM BoardVO b "
+		+ "WHERE b.title LIKE %?1% "
+		+ "ORDER BY b.seq DESC ") //sql문장이 아님
+	List<BoardVO> queryAnno(String word);
+	
+//	[2] 네이티브 쿼리
+	
+	
+	
+}

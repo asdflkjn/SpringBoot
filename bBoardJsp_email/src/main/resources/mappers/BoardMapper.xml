@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.dao.BoardDAO"> <!--DAO랑 이름 맞추기 위해서-->
+
+	<!--전체레코드 검색-->
+	<select id="getBoardList" resultType="BoardVO">
+		SELECT
+			*
+		FROM board
+		ORDER BY seq DESC
+	</select>
+	
+	<!--상세레코드 검색-->
+	<select id="getBoard" parameterType="BoardVO" resultType="BoardVO">
+		SELECT
+			*
+		FROM board
+		WHERE seq=#{seq}
+	</select>
+	
+	<!--레코드 입력-->
+	<insert id="saveBoard" parameterType="BoardVO">
+		INSERT INTO board(title, writer, content, regdate, cnt)
+		VALUES(#{title}, #{writer}, #{content}, sysdate(), 0) <!--sysdate() 또는 now()-->
+	</insert>	
+	
+	<!--레코드 수정-->
+	<update id="updateBoard" parameterType="BoardVO">
+		UPDATE board
+		SET title=#{title}, content=#{content}, regdate=#{regdate}
+		WHERE seq=#{seq}
+	</update>
+	
+	<!--레코드 삭제-->
+	<delete id="deleteBoard" parameterType="BoardVO">
+		DELETE FROM board
+		WHERE seq=#{seq}
+	</delete>
+	
+</mapper>
+
+<!--resources/mappers/BoardMapper.xml-->
+<!--xml 파일 앞에는 주석 달면 안됨-->

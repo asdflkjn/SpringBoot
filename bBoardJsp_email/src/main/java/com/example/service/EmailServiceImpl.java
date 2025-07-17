@@ -1,0 +1,84 @@
+package com.example.service;
+
+import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.example.dao.MemberDAO;
+import com.example.domain.MemberVO;
+
+@Service
+public class EmailServiceImpl implements EmailService  {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private MemberDAO memberDAO;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    // 이메일 인증 코드 발송 (회원가입 등에서 사용)
+    @Override
+    public String sendVerificationEmail(String email) throws Exception {
+        String code = generateCode();
+
+        logger.info("sendVerificationEmail 호출됨. 이메일: {}, 인증코드: {}", email, code);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        message.setSubject("이메일 인증 코드", "UTF-8");
+        message.setText("인증 코드: " + code, "UTF-8", "html");
+        message.addRecipients(MimeMessage.RecipientType.TO, email);
+
+        mailSender.send(message);
+
+        logger.info("메일 발송 성공: {}", email);
+
+        return code;
+    }
+
+    // 6자리 인증 코드 생성
+    private String generateCode() {
+        return String.valueOf((int) ((Math.random() * 900000) + 100000)); // 6자리 코드 생성
+    }
+
+    // 임시 비밀번호 발급 및 이메일 전송 (비밀번호 찾기)
+    @Override
+    public boolean sendTempPassword(String email) throws Exception {
+        MemberVO member = memberDAO.findByEmail(email);
+        if (member == null) return false;
+
+        String tempPw = generateTempPassword();
+        String encodedPw = passwordEncoder.encode(tempPw);
+        member.setPassword(encodedPw);
+        memberDAO.updatePassword(member);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("임시 비밀번호 안내");
+        message.setText("임시 비밀번호: " + tempPw + "\n로그인 후 꼭 비밀번호를 변경하세요!");
+        mailSender.send(message);
+
+        logger.info("임시 비밀번호 발송 성공: {}", email);
+
+        return true;
+    }
+
+    // 8자리 임시 비밀번호 생성
+    private String generateTempPassword() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder pw = new StringBuilder();
+        Random rnd = new Random();
+        for (int i = 0; i < 8; i++) {
+            pw.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        return pw.toString();
+    }
+}

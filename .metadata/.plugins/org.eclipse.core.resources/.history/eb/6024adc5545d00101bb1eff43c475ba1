@@ -1,0 +1,50 @@
+package com.example.controller;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.domain.BoardVO;
+import com.example.persistence.QueryMethodRepository;
+
+@Controller
+public class QueryMethodController {
+
+	@Autowired
+	private QueryMethodRepository repo;
+	
+	@RequestMapping("/querymethod")
+	public String sample(Model m) {
+		
+		// 제목이 1212인 검색
+//		List<BoardVO> result = repo.findByTitle("1212");
+		
+		// 제목이 1212가 아닌 경우를 검색
+//		List<BoardVO> result = repo.findByTitleNot("1212");
+
+		// 제목은 'test23'이 아니거나 작성자가 'test'인 경우를 검색하고 싶을 때 
+//		List<BoardVO> result = repo.findByTitleNotOrWriter("test23", "test");
+		
+//		List<BoardVO> result = repo.findByCnt(4);
+//		List<BoardVO> result = repo.findByCntGreaterThan(4);
+//		List<BoardVO> result = repo.findByCntGreaterThanEqual(4);
+//		List<BoardVO> result = repo.findByCntLessThanEqual(4);
+//		List<BoardVO> result = repo.findByRegdateIsNull();
+//		List<BoardVO> result = repo.findByRegdateIsNotNull();
+		// 날짜 문자열을 LocalDate로 파싱
+        LocalDate localDate = LocalDate.parse("2025-07-11", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Date date = Date.valueOf(localDate); // java.sql.Date.valueOf(LocalDate)
+
+        // '2025-07-10' 이전의 게시글 조회
+        List<BoardVO> result = repo.findByRegdateLessThan(date);
+		
+		return "/board/getBoardList";
+	}
+	
+}

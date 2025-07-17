@@ -1,0 +1,18 @@
+package com.example.dao;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import com.example.domain.MemberFileVO;
+import com.example.domain.MemberVO;
+
+@Mapper
+public interface MemberFileDAO { //매퍼랑 짝꿍 만들기 위해서 요 DAO가 필요
+
+	public Integer saveMemberFile(MemberVO vo); //받을거면 int, 받을 생각 없으면 void, 안줘도 public인 이유는 interface여서.
+	
+//	public MemberFileVO selectFile(MemberFileVO fvo); // 무조건 하나 받는다. pk 검색이라서, 여러 개 받을 거면 List<FileVO>로 적으면 된다.
+	
+	
+}

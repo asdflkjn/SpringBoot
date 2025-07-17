@@ -1,0 +1,30 @@
+package com.example.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.example.domain.BoardVO;
+
+@Mapper // mapper랑 짝꿍이라는 의미, 매퍼를 보면서 만들기
+public interface BoardDAO {
+	
+    // 전체 레코드 조회 / 게시글 전체 목록보기
+    public List<BoardVO> getBoardList(); // id가 함수명, 레코드가 여러 개라서 List, parameter타입 없어서 인자 없음 
+
+    // 상세 레코드 조회 (파라미터로 BoardVO 사용, seq 필드만 채워서 전달) / 게시글번호의 게시글 상세검색
+    public HashMap getBoard(BoardVO vo); //파라미터 타입 있고 변수명은 맘대로
+
+    // 레코드/게시글 입력 
+    public Integer saveBoard(BoardVO vo); //insert, delete, update는 int/Integer 타입을 리턴, 몇 개 안 받을거면 void
+    
+    // 레코드/게시글 수정
+    public Integer updateBoard(BoardVO vo);
+    
+    // 레코드/게시글 삭제
+    public Integer deleteBoard(BoardVO vo);
+    
+    // 최근 입력한 게시글번호 검색
+    public Integer selectId();
+}

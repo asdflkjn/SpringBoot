@@ -1,0 +1,33 @@
+<%@ page contentType="text/html; charset=utf-8"%>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>글 목록</title>
+</head>
+<body>
+	<h1> 직원 목록 </h1>
+
+	<table border="1">
+			<tr>
+				<th bgcolor="orange" width="100">사원번호</th>
+				<th bgcolor="orange" width="200">사원명</th>
+				<th bgcolor="orange" width="150">업무</th>
+				<th bgcolor="orange" width="150">입사일</th>
+				<th bgcolor="orange" width="100">월급</th>
+			</tr>
+			<c:forEach items="${EmpList}" var="employee">
+				<tr>
+					<td>${employee.empno}</td>
+					<td>${employee.ename}</td>
+					<td>${employee.job}</td>
+					<td>${employee.hiredate}</td>
+					<td>${employee.sal}</td>
+				</tr>
+			</c:forEach>
+		</table>
+
+</body>
+</html>

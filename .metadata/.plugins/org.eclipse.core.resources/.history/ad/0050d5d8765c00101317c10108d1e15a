@@ -1,0 +1,7 @@
+package com.example.domain;
+
+// VO != DTO != Entity 3개가 다르다.
+
+public class BoardVO {
+
+}

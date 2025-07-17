@@ -1,0 +1,33 @@
+package com.example.domain;
+
+import java.util.Date;
+
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Data;
+
+@Data
+@Entity
+//@Table(name="emp_t")
+public class Employee {
+
+	@Id
+	private Integer empno;
+	
+	private String ename;
+	
+	private String job;
+	
+	private Integer mgr;
+	
+	@UpdateTimestamp
+	private Date hiredate;
+	
+	private Integer sal;	
+	
+	private Integer comm;
+	
+	private Integer deptno;
+}
